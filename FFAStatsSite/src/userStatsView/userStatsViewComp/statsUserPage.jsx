@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import GeneralPlayerStats from './dataClasses/generalPlayerStats';
+import GeneralPlayerStats from '../../dataClasses/generalPlayerStats';
 
 
 function StatsUserPage() {
