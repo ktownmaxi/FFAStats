@@ -1,38 +1,20 @@
-import './App.css'
-import { useEffect, useState } from 'react'
-import GeneralPlayerStats from './dataClasses/generalPlayerStats';
-
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SearchPage from './searchPage';
+import StatsUserPage from './statsUserPage';
 
 function App() {
-  
-  const [jsonData, setJsonData] = useState(null);
-  const [generalPlayerData, setGeneralPlayerData] = useState();
-
-  useEffect(() => {
-    fetch('https://api.hglabor.de/stats/FFA/c9392cbf-ba57-4593-8d4f-dd856120cd4c', {
-      method: 'GET',
-      headers: {
-        'accept': '*/*'
-      }
-    })
-    .then(response => response.json())
-    .then(data => parseJsonData(data, setJsonData, setGeneralPlayerData))
-    .catch(error => console.error('Error:', error));
-  }, []);
 
   return (
-    <div>
-      {jsonData ? <pre>{JSON.stringify(jsonData, null, 2)}</pre> : <p>Loading...</p>}
-      <p>{generalPlayerData == null ? null : generalPlayerData.toString()}</p>
-    </div>
+    <Router>
+        <div>
+            <Routes>
+                <Route  path='/' element={<SearchPage/>}/>
+                <Route path='/profiles/:uuid' element={<StatsUserPage/>}/>
+                <Route/>
+            </Routes>
+        </div>
+    </Router>
   )
 }
 
-function parseJsonData(inputJsonData, setJsonData, setGeneralPlayerData){
-  setJsonData(inputJsonData);
-  setGeneralPlayerData(new GeneralPlayerStats(inputJsonData));
-} 
-
-
-export default App
+export default App;
