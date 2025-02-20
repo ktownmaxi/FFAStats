@@ -7,6 +7,8 @@ function StatsUserPage() {
   
   const [jsonData, setJsonData] = useState(null);
   const [generalPlayerData, setGeneralPlayerData] = useState();
+  const [headImg, setHeadImg] = useState();
+  const [skinImg, setSkinImg] = useState();
 
   const { uuid } = useParams();
 
@@ -20,13 +22,23 @@ function StatsUserPage() {
     .then(response => response.json())
     .then(data => parseJsonData(data, setJsonData, setGeneralPlayerData))
     .catch(error => console.error('Error:', error));
-  }, []);
+  }, [uuid]);
+
+  useEffect(() => {
+    const headImgUrl = `https://mineskin.eu/avatar/${uuid}`;
+    setHeadImg(headImgUrl);
+
+    const skinImgUrl = `https://mineskin.eu/body/${uuid}`;
+    setSkinImg(skinImgUrl);
+
+
+  }, [uuid]);
 
   return (
     <div>
-      {jsonData ? <pre>{JSON.stringify(jsonData, null, 2)}</pre> : <p>Loading...</p>}
-      <p>{generalPlayerData == null ? null : generalPlayerData.toString()}</p>
-      <p>UUID: {uuid}</p>
+      <p>{generalPlayerData == null ? <p>Loading...</p> : generalPlayerData.toString()}</p>
+      <img src={headImg} alt="Player Head"></img>
+      <img src={skinImg} alt="Player Skin"></img>
     </div>
   )
 }
