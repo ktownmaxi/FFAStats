@@ -11,7 +11,7 @@ function StatsUserPage() {
   const { uuid } = useParams();
 
   useEffect(() => {
-    fetch('https://api.hglabor.de/stats/FFA/c9392cbf-ba57-4593-8d4f-dd856120cd4c', {
+    fetch(`https://api.hglabor.de/stats/FFA/${uuid}`, {
       method: 'GET',
       headers: {
         'accept': '*/*'
