@@ -8,15 +8,8 @@ function SearchPage() {
 
     function search(formData){
         const playername = formData.get("nameQuery");
-        const apiURL = `https://api.ashcon.app/mojang/v2/user/${playername}`;
+        navigate(`/profiles/${playername}`);
 
-        fetch(apiURL)
-        .then(response => response.json())
-        .then(data => {
-            const playerUUID = data.uuid;
-            navigate(`/profiles/${playerUUID}`);
-        })
-        .catch(error => console.error('Error:', error));
     }
 
     return (

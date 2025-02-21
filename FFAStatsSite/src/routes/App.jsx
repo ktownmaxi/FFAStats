@@ -9,7 +9,7 @@ function App() {
         <div>
             <Routes>
                 <Route  path='/' element={<SearchPage/>}/>
-                <Route path='/profiles/:uuid' element={<StatsUserPage/>}/>
+                <Route path='/profiles/:playername' element={<StatsUserPage/>}/>
                 <Route/>
             </Routes>
         </div>
