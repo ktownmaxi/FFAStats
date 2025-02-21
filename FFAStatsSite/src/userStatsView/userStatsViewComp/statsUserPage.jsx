@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GeneralPlayerStats from '../../dataClasses/generalPlayerStats';
 import './statsUserPage.css';
 import bottleGif from '../../assets/Bottle_o_Enchanting.gif';
@@ -16,7 +16,9 @@ function StatsUserPage() {
   const [headImg, setHeadImg] = useState();
   const [skinImg, setSkinImg] = useState();
   const [uuid, setUUID] = useState();
+  const [playerNotFound, setPlayerNotFound] = useState(false);
 
+  const navigate = useNavigate();
   const { playername } = useParams();
   nameToUUID(playername, setUUID);
 
@@ -34,9 +36,17 @@ function StatsUserPage() {
         'accept': '*/*'
       }
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 404) {
+          setPlayerNotFound(true);
+        } else {
+          throw new Error('An error occurred');
+        }
+      }
+      return response.json();
+    })
     .then(data => parseJsonData(data, setGeneralPlayerData))
-    .catch(error => console.error('Error:', error));
 
     // Fetch skin data from mineskin API
 
@@ -48,8 +58,16 @@ function StatsUserPage() {
 
   }, [uuid]);
 
+  const goToHomePage = () => {
+    navigate('/');
+  }
+
   return (
-    <div>
+
+    playerNotFound ? playerNotFoundScreen(goToHomePage) :
+
+
+    <div className="stats-user-page">
       <img id="headImg" src={headImg} alt="Player Head"></img>
 
       <h1>{playername}</h1>
@@ -100,8 +118,24 @@ function StatsUserPage() {
               <div className="stat-value">{generalPlayerData.bounty}</div>
           </div>
           </div>
+
       }
 
+          <div className="footer">
+              <a class="previous" onClick={goToHomePage}>Zurück zur Startseite</a>
+          </div>
+
+    </div>
+  )
+}
+
+function playerNotFoundScreen(goToHomePage){
+
+  return(
+    <div className="stats-user-page"> Spieler nicht gefunden :(
+        <div className="footer">
+              <a class="previous" onClick={goToHomePage}>Zurück zur Startseite</a>
+          </div>
     </div>
   )
 }

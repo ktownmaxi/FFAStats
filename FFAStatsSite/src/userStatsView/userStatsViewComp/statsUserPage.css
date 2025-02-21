@@ -83,3 +83,31 @@ body {
     width: 30px;
     height: 30px;
 }
+
+.footer {
+    text-align: center;
+    display: block;
+    width: 65%;
+    margin-top: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.previous {
+    color: white;
+    text-decoration: none;
+}
+
+.previous:hover {
+    color: rgb(206, 206, 206);
+    text-decoration: underline;
+}
+
+.stats-user-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
