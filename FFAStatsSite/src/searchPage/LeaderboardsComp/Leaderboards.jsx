@@ -52,12 +52,13 @@ function Leaderboards(){
                 </thead>
                 <tbody>
                     {leaderboardData.map((element, index) => (
+                        console.log(leaderboardData),
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>
                                 <div className='playerCollection'>
-                                    <img className='playerHead'/>
-                                    {element.playerId}
+                                    <img className='playerHead' src={element.playerhead}/>
+                                    {element.playername}
                                 </div>
                             </td>
                             <td>{element.kills}</td>
@@ -81,7 +82,8 @@ async function parseJsonData(data, setLeaderboardData){
     let dataObj = new Array();
 
     const promises = data.map(async (element) => {
-        element.playerId = await UUIDToName(element.playerId);
+        element.playername = await UUIDToName(element.playerId);
+        element.playerhead = `https://mineskin.eu/avatar/${element.playerId}`;
         dataObj.push(new GeneralPlayerStats(element));
     });
 
@@ -100,13 +102,12 @@ async function UUIDToName(UUID){
         const response = await fetch(apiURL);
         const data = await response.json();
         const playername = data.username;
-        console.log(playername);
         return playername;
     } catch (error) {
         console.error('Error:', error);
         return "Error";
     } 
 
-}  
+}
 
 export default Leaderboards;

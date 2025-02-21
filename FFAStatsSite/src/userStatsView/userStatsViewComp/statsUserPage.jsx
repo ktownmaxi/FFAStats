@@ -46,7 +46,7 @@ function StatsUserPage() {
       }
       return response.json();
     })
-    .then(data => parseJsonData(data, setGeneralPlayerData))
+    .then(data => parseJsonData(data, setGeneralPlayerData, playername))
 
     // Fetch skin data from mineskin API
 
@@ -122,7 +122,7 @@ function StatsUserPage() {
       }
 
           <div className="footer">
-              <a class="previous" onClick={goToHomePage}>Zurück zur Startseite</a>
+              <a className="previous" onClick={goToHomePage}>Zurück zur Startseite</a>
           </div>
 
     </div>
@@ -134,13 +134,14 @@ function playerNotFoundScreen(goToHomePage){
   return(
     <div className="stats-user-page"> Spieler nicht gefunden :(
         <div className="footer">
-              <a class="previous" onClick={goToHomePage}>Zurück zur Startseite</a>
+              <a className="previous" onClick={goToHomePage}>Zurück zur Startseite</a>
           </div>
     </div>
   )
 }
 
-function parseJsonData(inputJsonData, setGeneralPlayerData){
+function parseJsonData(inputJsonData, setGeneralPlayerData, playername){
+  inputJsonData["playername"] = playername
   setGeneralPlayerData(new GeneralPlayerStats(inputJsonData));
 } 
 

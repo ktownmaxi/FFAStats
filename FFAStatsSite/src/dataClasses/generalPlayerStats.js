@@ -1,5 +1,7 @@
 class GeneralPlayerStats {
     #playerId;
+    #playername;
+    #playerhead;
     #xp;
     #kills;
     #deaths;
@@ -9,6 +11,8 @@ class GeneralPlayerStats {
 
     constructor(data) {
         this.#playerId = data.playerId;
+        this.#playername = data.playername;
+        this.#playerhead = data.playerhead;
         this.#xp = data.xp;
         this.#kills = data.kills;
         this.#deaths = data.deaths;
@@ -20,6 +24,14 @@ class GeneralPlayerStats {
     // Getter-Methods
     get playerId() {
         return this.#playerId;
+    }
+
+    get playername() {
+        return this.#playername;
+    }
+
+    get playerhead() {
+        return this.#playerhead;
     }
 
     get xp() {
@@ -51,6 +63,14 @@ class GeneralPlayerStats {
         this.#playerId = value;
     }
 
+    set playername(value) {
+        this.#playername = value;
+    }
+
+    set playerhead(value) {
+        this.#playerhead = value;
+    }
+
     set xp(value) {
         this.#xp = value;
     }
@@ -76,12 +96,22 @@ class GeneralPlayerStats {
     }
 
     toString() {
-        return `Player ID: ${this.#playerId}\nXP: ${this.#xp}\nKills: ${this.#kills}\nDeaths: ${this.#deaths}\nCurrent Kill Streak: ${this.#currentKillStreak}\nHighest Kill Streak: ${this.#highestKillStreak}\nBounty: ${this.#bounty}`;
+        return `Player ID: ${this.#playerId}
+            Player Name: ${this.#playername}
+            Player Head: ${this.#playerhead}
+            XP: ${this.#xp}
+            Kills: ${this.#kills}
+            Deaths: ${this.#deaths}
+            Current Kill Streak: ${this.#currentKillStreak}
+            Highest Kill Streak: ${this.#highestKillStreak}
+            Bounty: ${this.#bounty}`;
     }
 
     toJSON() {
         return {
             playerId: this.#playerId,
+            playername: this.#playername,
+            playerhead: this.#playerhead,
             xp: this.#xp,
             kills: this.#kills,
             deaths: this.#deaths,
