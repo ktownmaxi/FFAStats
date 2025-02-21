@@ -1,7 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import './Leaderboards.css';
-import { data } from 'react-router-dom';
 import GeneralPlayerStats from '../../dataClasses/generalPlayerStats';
 
 
@@ -34,13 +33,44 @@ function Leaderboards(){
 
 
     return (
+
         <div>
             <h2>Leaderboards</h2>
-            {
-                leaderboardData != null ? leaderboardData.map((element, index) => (
-                    <div key={index}>{element.toString()}</div>
-                )) : null
-            }
+
+            {leaderboardData == null ? "Loading..." :
+            
+            <table border={1}>
+                <thead>
+                    <tr>
+                        <th>Rang</th>
+                        <th>Spieler</th>
+                        <th>Kills</th>
+                        <th>Deaths</th>
+                        <th>Highest <br/> Kill Streak</th>
+                        <th>XP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {leaderboardData.map((element, index) => (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>
+                                <div className='playerCollection'>
+                                    <img className='playerHead'/>
+                                    {element.playerId}
+                                </div>
+                            </td>
+                            <td>{element.kills}</td>
+                            <td>{element.deaths}</td>
+                            <td>{element.highestKillStreak}</td>
+                            <td>{element.xp}</td>
+                        </tr>
+                    ))}
+
+                </tbody>
+            </table>
+
+            }   
         
         </div>
     );
@@ -77,7 +107,6 @@ async function UUIDToName(UUID){
         return "Error";
     } 
 
-}
-  
+}  
 
 export default Leaderboards;

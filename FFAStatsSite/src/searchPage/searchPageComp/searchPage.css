@@ -5,8 +5,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 0;
+}
+
+#root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px; /* Fügen Sie padding hinzu, um Platz um den Inhalt zu schaffen */
 }
 
 h1 {

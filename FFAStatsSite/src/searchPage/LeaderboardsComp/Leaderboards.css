@@ -1,0 +1,60 @@
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.9em;
+  }
+
+thead {
+    background-color: rgba(255,255,255,0.25);
+}
+
+thead th {
+    padding: 8px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #E2E2E2;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    cursor: pointer;
+    position: relative;
+    font-size: 0.85em;
+    text-align: center;
+  }
+
+tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+tbody tr:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+td {
+    padding: 8px;
+    letter-spacing: 0.7px;
+    text-align: center;
+    color: #FFF;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+td:nth-child(1) {
+font-weight: bold;
+    color: #FFD700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    font-size: 0.9em;
+}
+
+.playerCollection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+.player-head {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    object-fit: cover;
+  }
