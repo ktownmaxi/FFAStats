@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './searchPage.css';
+import Leaderboards from '../LeaderboardsComp/Leaderboards';
 
 
 function SearchPage() {
@@ -14,11 +15,12 @@ function SearchPage() {
 
     return (
         <div>
-            <h1>Search Page</h1>
+            <h1>HGLabor FFA <br/> Spielerstatistiken </h1>
             <form action={search}>
                 <input name="nameQuery" type="text" placeholder="Input player name"></input>
                 <button type="submit">Search</button>
             </form>
+            <Leaderboards />
         </div>
     );
 }

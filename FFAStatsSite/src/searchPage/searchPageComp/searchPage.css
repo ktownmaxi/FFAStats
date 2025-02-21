@@ -11,7 +11,15 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #ffff00; /* Gelb */
+    text-shadow: 2px 2px 0 #0000ff; /* Blau */
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
     margin-bottom: 2rem;
     color: #ffff00; /* Gelb */
     text-shadow: 2px 2px 0 #0000ff; /* Blau */
