@@ -1,5 +1,4 @@
 class GeneralPlayerStats {
-    // Private Felder
     #playerId;
     #xp;
     #kills;
@@ -18,7 +17,7 @@ class GeneralPlayerStats {
         this.#bounty = data.bounty;
     }
 
-    // Getter-Methoden
+    // Getter-Methods
     get playerId() {
         return this.#playerId;
     }
@@ -47,7 +46,7 @@ class GeneralPlayerStats {
         return this.#bounty;
     }
 
-    // Setter-Methoden
+    // Setter-Methods
     set playerId(value) {
         this.#playerId = value;
     }
