@@ -1,0 +1,54 @@
+body {
+    font-family: '2P', sans-serif;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #ffff00; /* Gelb */
+    text-shadow: 2px 2px 0 #0000ff; /* Blau */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="text"] {
+    font-family: '2P', sans-serif;
+    align-content: center;
+    text-align: center;
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 2px solid #0000ff; /* Blau */
+    border-radius: 5px;
+    background-color: #2e2e2e;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+button[type="submit"] {
+    font-family: '2P', sans-serif;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffff00; /* Gelb */
+    color: #000000;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #cccc00; /* Dunkleres Gelb */
+}
