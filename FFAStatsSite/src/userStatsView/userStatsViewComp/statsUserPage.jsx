@@ -100,7 +100,6 @@ function StatsUserPage() {
               <div className="stat-value">{generalPlayerData.bounty}</div>
           </div>
           </div>
-
       }
 
     </div>
