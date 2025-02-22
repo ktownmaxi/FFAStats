@@ -15,23 +15,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px; /* Fügen Sie padding hinzu, um Platz um den Inhalt zu schaffen */
+    padding: 20px;
 }
 
 h1 {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #ffff00; /* Gelb */
-    text-shadow: 2px 2px 0 #0000ff; /* Blau */
+    color: #f3c343;
+    text-shadow: 4px 4px 0 #3a4eb3;
 }
 
 h2 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 2rem;
-    color: #ffff00; /* Gelb */
-    text-shadow: 2px 2px 0 #0000ff; /* Blau */
+    color: #f3c343; /* NoRisk gelb */
+    text-shadow: 4px 4px 0 #3a4eb3; /* NoRisk blau */
 }
 
 form {
@@ -55,7 +55,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-    border: 0.1rem solid #eeee8c; /* Gelb */
+    border: 0.1rem solid #eeee8c;
     outline: none;
 }
 
@@ -64,7 +64,7 @@ button[type="submit"] {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #ffff00; /* Gelb */
+    background-color: #f3c343; /* Gold */
     color: #000000;
     font-size: 1rem;
     cursor: pointer;
@@ -72,5 +72,5 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #cccc00; /* Dunkleres Gelb */
+    background-color: #b39134;
 }

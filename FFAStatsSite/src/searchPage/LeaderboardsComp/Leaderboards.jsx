@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Leaderboards.css';
@@ -14,6 +14,8 @@ function Leaderboards(){
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        setLeaderboardData(null);
     
         // Fetch leaderboard data from HG Labor API
     
@@ -34,7 +36,8 @@ function Leaderboards(){
       }, [sortingCategory]);
 
 
-      const goToPlayerPage = (playername) => {
+
+    const goToPlayerPage = (playername) => {
         navigate(`/profiles/${playername}`);
       }
 
@@ -42,26 +45,26 @@ function Leaderboards(){
 
         <div>
             <h2>Leaderboards</h2>
-
-            {leaderboardData == null ? "Loading..." :
-            
             <table border={1}>
                 <thead>
                     <tr>
                         <th>Rang</th>
-                        <th onClick={() => setSortingCategory("player")}>Spieler</th>
-                        <th onClick={() => setSortingCategory("kills")}>Kills</th>
-                        <th onClick={() => setSortingCategory("deaths")}>Deaths</th>
-                        <th onClick={() => setSortingCategory("highestKillStreak")}>Highest <br/> Kill Streak</th>
-                        <th onClick={() => setSortingCategory("xp")}>XP</th>
+                        <th onClick={() => setSortingCategory("player")} className={sortingCategory == "player" ? "highlighted" : ""}>Spieler</th>
+                        <th onClick={() => setSortingCategory("kills")} className={sortingCategory == "kills" ? "highlighted" : ""}>Kills</th>
+                        <th onClick={() => setSortingCategory("deaths")} className={sortingCategory == "deaths" ? "highlighted" : ""}>Deaths</th>
+                        <th onClick={() => setSortingCategory("highestKillStreak")} className={sortingCategory == "highestKillStreak" ? "highlighted" : ""}>Highest <br/> Kill Streak</th>
+                        <th onClick={() => setSortingCategory("xp")} className={sortingCategory == "xp" ? "highlighted" : ""}>XP</th>
                     </tr>
                 </thead>
+                {leaderboardData == null ? <div className='loadingContainer'>
+                        <div className='spinner'></div>
+                    </div> :
                 <tbody>
                     {leaderboardData.map((element, index) => (
-                        <tr key={index} onClick={() => goToPlayerPage(element.playername)}>
+                        <tr key={index}>
                             <td>{index + 1}</td>
                             <td>
-                                <div className='playerCollection'>
+                                <div className='playerCollection' onClick={() => goToPlayerPage(element.playername)}>
                                     <img className='playerHead' src={element.playerhead}/>
                                     {element.playername}
                                 </div>
@@ -71,12 +74,12 @@ function Leaderboards(){
                             <td>{element.highestKillStreak}</td>
                             <td>{element.xp}</td>
                         </tr>
-                    ))}
+                    ))};
 
                 </tbody>
-            </table>
+                }
 
-            }   
+            </table>   
         
         </div>
     );
