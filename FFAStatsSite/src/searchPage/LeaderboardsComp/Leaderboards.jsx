@@ -1,5 +1,4 @@
-import React, { use } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Leaderboards.css';
 import GeneralPlayerStats from '../../dataClasses/generalPlayerStats';
@@ -10,12 +9,30 @@ function Leaderboards(){
 
     const [sortingCategory, setSortingCategory] = useState("kills");
     const [leaderboardData, setLeaderboardData] = useState();
+    const [rawData, setRawData] = useState();
+    const [page, setPage] = useState(0);
+    const [loadedAPICalls, setLoadedAPICalls] = useState(1);
 
     const navigate = useNavigate();
+
+    const isFetchingRef = useRef(true);
+
+    const pageRef = useRef(page);
+    const loadedAPICallsRef = useRef(loadedAPICalls);
+
+    useEffect(() => {
+        pageRef.current = page;
+    }, [page]);
+
+    useEffect(() => {
+        loadedAPICallsRef.current = loadedAPICalls;
+    }, [loadedAPICalls]);
 
     useEffect(() => {
 
         setLeaderboardData(null);
+        window.scrollTo({ top: 0, behavior: "instant" }); 
+        setPage(-1); 
     
         // Fetch leaderboard data from HG Labor API
     
@@ -31,16 +48,51 @@ function Leaderboards(){
           }
           return response.json();
         })
-        .then(async data => await parseJsonData(data, setLeaderboardData, sortingCategory))
+        .then(data => {
+            setRawData(data);
+            //setLoadedAPICalls(prev => prev + 1);
+            setLoadedAPICalls(1);
+            setPage(1);
+        })
     
       }, [sortingCategory]);
 
+    const handleScroll = () => {
+        if(window.innerHeight + document.documentElement.scrollTop + 1 >=
+            document.documentElement.scrollHeight && !isFetchingRef.current 
+            && pageRef.current*10*loadedAPICallsRef.current < loadedAPICallsRef.current*100)
+            {
+            isFetchingRef.current = true;
+            setPage(prev => prev + 1);  
+        }
+    }
+
+    useEffect(() => {
+
+        const fetchData = () => {
+            if(rawData != null){
+                parseJsonData(rawData, setLeaderboardData, sortingCategory, page, isFetchingRef)
+            }
+        };
+
+        fetchData();
+        
+    }, [page]);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [])
 
 
     const goToPlayerPage = (playername) => {
         navigate(`/profiles/${playername}`);
       }
 
+    // window.scrollTo({ top: 0, behavior: "instant" });
     return (
 
         <div>
@@ -56,9 +108,7 @@ function Leaderboards(){
                         <th onClick={() => setSortingCategory("xp")} className={sortingCategory == "xp" ? "highlighted" : ""}>XP</th>
                     </tr>
                 </thead>
-                {leaderboardData == null ? <div className='loadingContainer'>
-                        <div className='spinner'></div>
-                    </div> :
+                {leaderboardData == null ? null :
                 <tbody>
                     {leaderboardData.map((element, index) => (
                         <tr key={index}>
@@ -74,7 +124,7 @@ function Leaderboards(){
                             <td>{element.highestKillStreak}</td>
                             <td>{element.xp}</td>
                         </tr>
-                    ))};
+                    ))}
 
                 </tbody>
                 }
@@ -86,8 +136,9 @@ function Leaderboards(){
 }
 
 
-async function parseJsonData(data, setLeaderboardData, sortingCategory){
+async function parseJsonData(data, setLeaderboardData, sortingCategory, page, isFetchingRef){
     let dataObj = new Array();
+    data = data.slice((page - 1) * 10, page * 10)
 
     const promises = data.map(async (element) => {
         element.playername = await UUIDToName(element.playerId);
@@ -99,7 +150,8 @@ async function parseJsonData(data, setLeaderboardData, sortingCategory){
 
     dataObj.sort((a, b) => b[sortingCategory] - a[sortingCategory]);
 
-    setLeaderboardData(dataObj);
+    setLeaderboardData(prev => [...(prev || []), ...dataObj]);
+    isFetchingRef.current = false;
 }
 
 async function UUIDToName(UUID){
