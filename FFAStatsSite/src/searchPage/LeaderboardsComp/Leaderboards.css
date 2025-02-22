@@ -64,3 +64,10 @@ font-weight: bold;
   .highlighted {
     background-color: #f3c343;
 }
+
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

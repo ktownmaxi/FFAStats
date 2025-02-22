@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Leaderboards.css';
 import GeneralPlayerStats from '../../dataClasses/generalPlayerStats';
+import LoadingAnimation from '../../generalComponents/LoadingAnimation';
 
 
 
@@ -129,7 +130,13 @@ function Leaderboards(){
                 </tbody>
                 }
 
-            </table>   
+            </table>
+
+            {isFetchingRef.current && 
+            <div className="loading-container">
+                <LoadingAnimation />
+            </div>
+        }    
         
         </div>
     );
