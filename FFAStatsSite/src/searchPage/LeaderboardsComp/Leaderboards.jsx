@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Leaderboards.css';
 import GeneralPlayerStats from '../../dataClasses/generalPlayerStats';
 
@@ -9,6 +10,8 @@ function Leaderboards(){
 
     const [sortingCategory, setSortingCategory] = useState("kills");
     const [leaderboardData, setLeaderboardData] = useState();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
     
@@ -26,11 +29,14 @@ function Leaderboards(){
           }
           return response.json();
         })
-        .then(async data => await parseJsonData(data, setLeaderboardData))
+        .then(async data => await parseJsonData(data, setLeaderboardData, sortingCategory))
     
       }, [sortingCategory]);
-    
 
+
+      const goToPlayerPage = (playername) => {
+        navigate(`/profiles/${playername}`);
+      }
 
     return (
 
@@ -43,17 +49,16 @@ function Leaderboards(){
                 <thead>
                     <tr>
                         <th>Rang</th>
-                        <th>Spieler</th>
-                        <th>Kills</th>
-                        <th>Deaths</th>
-                        <th>Highest <br/> Kill Streak</th>
-                        <th>XP</th>
+                        <th onClick={() => setSortingCategory("player")}>Spieler</th>
+                        <th onClick={() => setSortingCategory("kills")}>Kills</th>
+                        <th onClick={() => setSortingCategory("deaths")}>Deaths</th>
+                        <th onClick={() => setSortingCategory("highestKillStreak")}>Highest <br/> Kill Streak</th>
+                        <th onClick={() => setSortingCategory("xp")}>XP</th>
                     </tr>
                 </thead>
                 <tbody>
                     {leaderboardData.map((element, index) => (
-                        console.log(leaderboardData),
-                        <tr key={index}>
+                        <tr key={index} onClick={() => goToPlayerPage(element.playername)}>
                             <td>{index + 1}</td>
                             <td>
                                 <div className='playerCollection'>
@@ -78,7 +83,7 @@ function Leaderboards(){
 }
 
 
-async function parseJsonData(data, setLeaderboardData){
+async function parseJsonData(data, setLeaderboardData, sortingCategory){
     let dataObj = new Array();
 
     const promises = data.map(async (element) => {
@@ -89,7 +94,7 @@ async function parseJsonData(data, setLeaderboardData){
 
     await Promise.all(promises);
 
-    dataObj.sort((a, b) => b.kills - a.kills);
+    dataObj.sort((a, b) => b[sortingCategory] - a[sortingCategory]);
 
     setLeaderboardData(dataObj);
 }
