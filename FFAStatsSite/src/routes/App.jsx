@@ -5,7 +5,6 @@ import StatsUserPage from '../userStatsView/userStatsViewComp/statsUserPage';
 function App() {
 
   return (
-    <Router>
         <div>
             <Routes>
                 <Route  path='/' element={<SearchPage/>}/>
@@ -13,7 +12,6 @@ function App() {
                 <Route/>
             </Routes>
         </div>
-    </Router>
   )
 }
 
